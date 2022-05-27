@@ -117,3 +117,18 @@
   top: -10px; 
   z-index: 15;
 }
+
+/* qr */
+
+.qr-container {
+  width: 100%;
+  padding-top: 30px; 
+}
+.wait-text {
+  text-align: center; 
+  font-weight: bold; 
+  font-size:20px;
+}
+.canvas-wrap {
+  padding-top: 50px;
+}
