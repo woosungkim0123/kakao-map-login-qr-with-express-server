@@ -6,6 +6,8 @@ const jejuPig = document.getElementById("jeju-pig");
 const subway = document.getElementById("subway");
 const myPosition = document.getElementById("my-position");
 const dbValue = document.getElementById("db-value").value;
+const dbArray = dbValue.split(",");
+const testContainer = document.querySelector(".test");
 // 영진 직업 전문 학원
 
 const YUNGJIN = [35.87555082502176, 128.6816374505427];
@@ -19,8 +21,8 @@ let userLatitude;
 let userLongitude;
 let clickPosition = "user";
 let markers = [];
+let selectedMarker = null;
 
-loading();
 changeBtnCss(4);
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition((pos) => {
@@ -30,7 +32,6 @@ if (navigator.geolocation) {
     drawMap(userLatitude, userLongitude);
     staticMarkder();
     addMarker(new kakao.maps.LatLng(userLatitude, userLongitude));
-    loading();
   });
   navigator.geolocation.watchPosition((pos) => {
     delMarkers();
@@ -42,13 +43,7 @@ if (navigator.geolocation) {
     }
   });
 }
-function loading() {
-  const loadingWrap = document.querySelector(".loading-wrap");
-  const body = document.querySelector("body");
 
-  body.classList.toggle("touch-none");
-  loadingWrap.classList.toggle("hidden");
-}
 function addMarker(position) {
   marker = new kakao.maps.Marker({
     position: position,
@@ -86,37 +81,66 @@ function drawMap(latitude, longitude) {
 function staticMarkder() {
   const positions = [
     {
-      title: "영진",
+      title: "YUNGJIN",
       latlng: new kakao.maps.LatLng(YUNGJIN[0], YUNGJIN[1]),
+      summary: "영진!",
     },
     {
-      title: "국밥",
+      title: "GUKBOB",
       latlng: new kakao.maps.LatLng(GUKBOB[0], GUKBOB[1]),
+      summary: "국밥먹어봄?",
     },
     {
-      title: "흑돈",
+      title: "JEJUPIG",
       latlng: new kakao.maps.LatLng(JEJUPIG[0], JEJUPIG[1]),
+      summary: "제주돼지래..",
     },
     {
-      title: "지하철 2번출구",
+      title: "SUBWAY2",
       latlng: new kakao.maps.LatLng(SUBWAY2[0], SUBWAY2[1]),
+      summary: "지하철 너무멈",
     },
   ];
-  const imageSrc =
-    "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-  const imageSize = new kakao.maps.Size(24, 35);
-  const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
   for (let i = 0; i < positions.length; i++) {
-    marker = new kakao.maps.Marker({
-      map: map,
-      position: positions[i].latlng,
-      title: positions[i].title,
-      image: markerImage,
-    });
-    marker.setMap(map);
+    addStaticMarker(positions[i]);
   }
 }
+function addStaticMarker(position) {
+  let markerImageUrl = "/client/file/no-done.jpg";
+  let markerImageNormalSize = new kakao.maps.Size(24, 35);
+  let markerImageClickSize = new kakao.maps.Size(50, 65);
+  if (dbArray.includes(position.title)) {
+    markerImageUrl = "/client/file/complete.jpg";
+    markerImageNormalSize = new kakao.maps.Size(50, 35);
+    markerImageClickSize = new kakao.maps.Size(70, 65);
+  }
+  const normalImage = createMarkerImage(markerImageUrl, markerImageNormalSize);
+  const clickImage = createMarkerImage(markerImageUrl, markerImageClickSize);
+  const marker = new kakao.maps.Marker({
+    map: map,
+    position: position.latlng,
+    title: position.title,
+    image: normalImage,
+  });
+
+  marker.normalImage = normalImage;
+
+  kakao.maps.event.addListener(marker, "click", function () {
+    testContainer.classList.remove("hidden");
+    testContainer.innerHTML = `<p style="color:#fff; font-weight:bold;">${position.title}은 ${position.summary}</p>`;
+    if (!selectedMarker || selectedMarker !== marker) {
+      !!selectedMarker && selectedMarker.setImage(selectedMarker.normalImage);
+      marker.setImage(clickImage);
+    }
+    selectedMarker = marker;
+  });
+}
+function createMarkerImage(url, markerSize) {
+  const markerImg = new kakao.maps.MarkerImage(url, markerSize);
+  return markerImg;
+}
+
 const panTo = (latitude, longitude) => {
   const moveLatLon = new kakao.maps.LatLng(latitude, longitude);
   map.panTo(moveLatLon);
@@ -132,7 +156,6 @@ function changeBtnCss(target) {
 }
 
 function chekcingDone() {
-  const dbArray = dbValue.split(",");
   for (let i = 0; i < dbArray.length; i++) {
     if (dbArray[i] === "YUNGJIN") {
       const youngJinMark = document.querySelector(".young-jin-mark");
