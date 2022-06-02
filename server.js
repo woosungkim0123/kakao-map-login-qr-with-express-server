@@ -35,6 +35,25 @@ server.post("/qr", function (req, res) {
   res.send({ success: true });
 });
 
+// 실습
+//Allow CORS: Access-Control-Allow-Origin
+server.get("/test", function (req, res) {
+  res.render("test");
+});
+
+server.post("/ajax/query", function (req, res) {
+  const apiKey = req.query.api_key;
+  if (!apiKey || apiKey !== "node") {
+    return res.send({ msg: "api키를 확인해주세요" });
+  }
+  return res.send({ msg: "성공하셨습니다" });
+});
+server.post("/ajax/body", function (req, res) {
+  const getData = req.body.data;
+  let msg = "여러분이 보낸 값은 " + getData + " 입니다.";
+  return res.send({ msg: msg });
+});
+
 server.listen(PORT, function () {
   console.log("로컬서버오픈: http://localhost:" + PORT);
 });
