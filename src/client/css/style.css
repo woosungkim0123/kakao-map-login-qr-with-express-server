@@ -27,21 +27,11 @@
 
 
 /* footer */
-
-.footer-container {
-  position: fixed; 
-  bottom:0; left:0; right:0; 
-  height: 60px; 
-  border-top: solid 1px rgb(153, 150, 150);
-  z-index: 20;
-  background-color: #fff;
-}
-.footer-li {
-  width: 25%; height:100%;
-}
-.click-on {
-  color: red
-}
+.footer-container { position: fixed; bottom:0; left:0; right:0; height: 60px; border-top: solid 1px rgb(153, 150, 150); z-index: 20; background-color: #fff; }
+.footer-container .footer-wrap { display: flex; align-items: center; height: 100%; }
+.footer-container .footer-wrap .bottom-menu { width: 25%; height:100%; }
+.footer-container .footer-wrap .bottom-menu { display: flex; justify-content: space-evenly; align-items: center; flex-direction: column; height:100%; }
+.footer-container .footer-wrap .bottom-menu.on { color: red; }
 
 
 

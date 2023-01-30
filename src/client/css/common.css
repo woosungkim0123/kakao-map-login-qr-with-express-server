@@ -4,9 +4,7 @@
 .theme-background-blue {
   background-color: #758cff;
 }
-.theme-font {
-  font-family: 'yg-jalnan', 'sans-serif';
-}
+.theme-font { font-family: 'yg-jalnan', 'sans-serif'; }
 .normal-font {
   font-family: 'Noto Sans KR', 'sans-serif';
 }
@@ -177,3 +175,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+
+

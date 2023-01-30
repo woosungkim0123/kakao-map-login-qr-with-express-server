@@ -1,38 +1,47 @@
+<footer class="theme-font footer-container">
+  <ul class="footer-wrap">
+    <li class="bottom-menu" data-url="/">
+      <i class="fas fa-home"></i>
+      <p>홈</p>
+    </li>
+    <li class="bottom-menu" data-url="/greet">
+      <i class="fas fa-user-alt"></i>
+      <p>인사말</p>
+    </li>
+    <li class="bottom-menu" data-url="/course">
+      <i class="fas fa-road"></i>
+      <p>코스 안내</p>
+    </li>
+    <li class="bottom-menu" data-url="/qr">
+      <i class="fas fa-qrcode"></i>
+      <p>QR</p>
+    </li>
+  </ul>
+</footer>
+<script>
+  const bottomMenus = document.querySelectorAll(".bottom-menu");
+  const url = window.location.pathname;
 
-    <footer class="theme-font footer-container">
-      <ul class="flex-n-c h-100">
-        <li class="footer-li">
-          <a href="/" class="flex-even-c-c h-100">
-            <i class="fas fa-home"></i>
-            <p>홈</p>
-          </a>
-        </li>
-        <li class="footer-li">
-          <a href="/greet" class="flex-even-c-c h-100">
-            <i class="fas fa-user-alt"></i>
-            <p>인사말</p>
-          </a>
-        </li>
-        <li class="footer-li">
-          <a href="/course" class="flex-even-c-c h-100">
-            <i class="fas fa-road"></i>
-            <p>코스 안내</p>
-          </a>
-        </li>
-        <li class="footer-li click-on" > <!--onclick="window.HybridApp.QR_Btn();" -->
-            <a href="/qr" class="flex-even-c-c h-100">
-            <i class="fas fa-qrcode"></i>
-            <p>QR</p>
-            </a>
-        </li>
-      </ul>
-    </footer>
-    <script>
-      const footerCss = (() => {
-        // css 변경 script
-        // window.location.pathname
-      })
-    </script>
-    
-  </body>
+  const phoneTypeCheck = () => {
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) return 'ios';
+    else if (/Android/i.test(navigator.userAgent)) return 'android';
+    else return 'pc';
+  };
+
+  const movePage = (e) => {
+    const clickUrl = e.currentTarget.dataset.url;
+    // if(clickUrl === "/qr" && phoneTypeCheck() != "pc") return window.HybridApp.QR_Btn();
+    location.href = clickUrl;
+  }
+
+  bottomMenus.forEach((bottomMenu) => {
+    if(bottomMenu.dataset.url === url) bottomMenu.classList.add("on");
+    else bottomMenu.addEventListener("click", movePage);
+  })
+  const output = (qrCode) => {
+    alert(qrCode);
+  }
+
+</script>
+</body>
 </html>
