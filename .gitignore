@@ -113,3 +113,4 @@ src/file/birth_certificate
 assets/
 build/
 file/
+.idea
