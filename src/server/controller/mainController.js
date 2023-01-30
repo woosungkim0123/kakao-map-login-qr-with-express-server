@@ -2,13 +2,17 @@
 
 let db = ["SUBWAY2", "JEJUPIG"];
 
-export const output = {
-  home: (req, res) => res.render("main/home"),
-  greet: (req, res) => res.render("main/greet"),
-  course: (req, res) => res.render("main/course", { db }),
-  qr: (req, res) => res.render("main/qr"),
-};
+/**
+ * GET Request Controller
+ */
+export const getHome = (req, res) => res.render("main/home");
+export const getGreet = (req, res) => res.render("main/greet");
+export const getCourse = (req, res) => res.render("main/course", { db });
+export const getQr = (req, res) => res.render("main/qr");
 
+/**
+ * POST Request Controller
+ */
 export const process = {
   qr: (req, res) => {
     const { type } = req.body;

@@ -21,7 +21,7 @@
 <script>
   const bottomMenus = document.querySelectorAll(".bottom-menu");
   const url = window.location.pathname;
-
+ 
   const phoneTypeCheck = () => {
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) return 'ios';
     else if (/Android/i.test(navigator.userAgent)) return 'android';
@@ -30,14 +30,15 @@
 
   const movePage = (e) => {
     const clickUrl = e.currentTarget.dataset.url;
-    // if(clickUrl === "/qr" && phoneTypeCheck() != "pc") return window.HybridApp.QR_Btn();
+    if(clickUrl === "/qr" && phoneTypeCheck() != "pc") return window.HybridApp.QR_Btn();
     location.href = clickUrl;
   }
-
+  
   bottomMenus.forEach((bottomMenu) => {
     if(bottomMenu.dataset.url === url) bottomMenu.classList.add("on");
     else bottomMenu.addEventListener("click", movePage);
   })
+
   const output = (qrCode) => {
     alert(qrCode);
   }
