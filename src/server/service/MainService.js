@@ -1,6 +1,6 @@
 import { MemoryMainRepository } from "../models/MemoryMainRepository.js";
 
-export static class MainService {
+export class MainService {
   static repository = new MemoryMainRepository();
 
   static async getAllCourse() {
