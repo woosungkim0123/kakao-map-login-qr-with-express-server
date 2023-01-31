@@ -1,4 +1,4 @@
-import { MemoryMainRepository } from "../models/MemoryMainRepository";
+import { MemoryMainRepository } from "../models/MemoryMainRepository.js";
 
 export class MainService {
   static repository = new MemoryMainRepository();
