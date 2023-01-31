@@ -1,13 +1,19 @@
 "use strict";
 
+import { MainService } from "../service/mainService";
+
 let db = ["SUBWAY2", "JEJUPIG"];
 
 /**
  * GET Request Controller
  */
 export const getHome = (req, res) => res.render("main/home");
-export const getGreet = (req, res) => res.render("main/greet");
-export const getCourse = (req, res) => res.render("main/course", { db });
+export const getUsed = (req, res) => res.render("main/used");
+export const getCourse = async (req, res) => {
+  const course = await MainService.getAllCourse();
+  console.log(course);
+  res.render("main/course", { course });
+};
 export const getQr = (req, res) => res.render("main/qr");
 
 /**
