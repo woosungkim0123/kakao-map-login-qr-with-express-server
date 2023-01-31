@@ -1,6 +1,6 @@
 "use strict";
 
-import { MainService } from "../service/mainService";
+import { MainService } from "../service/mainService.js";
 
 let db = ["SUBWAY2", "JEJUPIG"];
 
