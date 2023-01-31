@@ -53,32 +53,31 @@ const drawMap = (latitude, longitude) => {
   map = new kakao.maps.Map(locationMap, options);
   map.setZoomable(false);
 };
-
-const staticMarker = () => {
+const addMarker = (data) => {
   let imgUrl = "/file/no-done.jpg";
   let imgSize = new kakao.maps.Size(24, 35);
 
+  if (data.visited === "Y") {
+    imgUrl = "/file/map_complete.png";
+    imgSize = new kakao.maps.Size(20, 30);
+  }
+  new kakao.maps.Marker({
+    map: map,
+    title: data.name,
+    position: new kakao.maps.LatLng(data.latitude, data.longitude),
+    image: new kakao.maps.MarkerImage(imgUrl, imgSize),
+  });
+};
+const staticMarker = () => {
   for (let i = 0; i < courseData.length; i++) {
-    if (courseData[i].visited === "Y") {
-      imgUrl = "/file/complete.jpg";
-      imgSize = new kakao.maps.Size(50, 35);
-    }
-
-    new kakao.maps.Marker({
-      map: map,
-      title: courseData[i].name,
-      position: new kakao.maps.LatLng(
-        courseData[i].latitude,
-        courseData[i].longitude
-      ),
-      image: new kakao.maps.MarkerImage(imgUrl, imgSize),
-    });
+    if (courseData[i].code === "USER") continue;
+    addMarker(courseData[i]);
   }
 };
 const addUserMarker = (position) => {
   marker = new kakao.maps.Marker({ position });
   marker.setMap(map);
-  //markers.push(marker);
+  markers.push(marker);
 };
 for (let i = 0; i < course.length; i++) {
   courseData.push({
@@ -86,6 +85,7 @@ for (let i = 0; i < course.length; i++) {
     code: course[i].dataset.code,
     latitude: course[i].dataset.latitude,
     longitude: course[i].dataset.longitude,
+    visited: course[i].dataset.visited,
   });
   course[i].addEventListener("click", clickMenu);
 }

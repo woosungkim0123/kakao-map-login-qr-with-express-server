@@ -1,33 +1,30 @@
 const phoneTypeCheck1 = () => {
   if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-    return 'ios';
+    return "ios";
   } else if (/Android/i.test(navigator.userAgent)) {
-    return 'android';
+    return "android";
   } else {
-    return 'pc';
+    return "pc";
   }
 };
 
-const addCorrectMenuStyle = (domArray, url) => {
-
-}
+const addCorrectMenuStyle = (domArray, url) => {};
 const loading = () => {
-  const loadingWrap = document.querySelector('.loading-wrap'),
-    body = document.querySelector('body');
+  const loadingWrap = document.querySelector(".loading-wrap"),
+    body = document.querySelector("body");
 
-  body.classList.toggle('touch-none');
-  loadingWrap.classList.toggle('hidden');
+  body.classList.toggle("touch-none");
+  loadingWrap.classList.toggle("hidden");
 };
-
 
 const successAlert = (title, text, cb) => {
   return Swal.fire({
     title,
     text,
-    icon: 'success',
+    icon: "success",
     showCancelButton: false,
-    confirmButtonColor: '#3085d6',
-    confirmButtonText: '확인',
+    confirmButtonColor: "#3085d6",
+    confirmButtonText: "확인",
   }).then(cb);
 };
 
@@ -35,59 +32,58 @@ const errorAlert = (title, text, cb) => {
   return Swal.fire({
     title,
     text,
-    icon: 'warning',
+    icon: "warning",
     showCancelButton: false,
-    confirmButtonColor: '#3085d6',
-    confirmButtonText: '확인',
+    confirmButtonColor: "#3085d6",
+    confirmButtonText: "확인",
   }).then(cb);
 };
 
-export const loadingv2 = () => {
-  const circle = document.querySelector('.circle2');
-  circle.classList.toggle('hidden');
+const loadingv2 = () => {
+  const circle = document.querySelector(".circle2");
+  circle.classList.toggle("hidden");
 };
 
 const loadingV3 = () => {
-  const body = document.querySelector('body');
-  body.classList.toggle('touch-none');
-  if (!document.querySelector('.circle2')) {
-    const circle = document.createElement('div');
-    circle.classList.add('circle2');
-    circle.classList.add('hidden');
+  const body = document.querySelector("body");
+  body.classList.toggle("touch-none");
+  if (!document.querySelector(".circle2")) {
+    const circle = document.createElement("div");
+    circle.classList.add("circle2");
+    circle.classList.add("hidden");
     body.appendChild(circle);
   }
-  document.querySelector('.circle2').classList.toggle('hidden');
+  document.querySelector(".circle2").classList.toggle("hidden");
 };
 
 // url에서 변수를 추출하는 함수
 const getParameterByName = (name) => {
-  name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
     results = regex.exec(location.search);
-  return results == null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  return results == null
+    ? ""
+    : decodeURIComponent(results[1].replace(/\+/g, " "));
 };
 
 const errorMsg = (msg) => {
   const Toast = Swal.mixin({
     toast: true,
-    position: 'bottom',
+    position: "bottom",
     showConfirmButton: false,
     timer: 2000,
   });
-  Toast.fire({ title: `${msg}`, icon: 'error' });
+  Toast.fire({ title: `${msg}`, icon: "error" });
 };
 
 const alert = (text, title) => {
   Swal.fire({
     title: title,
     text: text,
-    icon: 'warning',
-    confirmButtonText: '확인',
+    icon: "warning",
+    confirmButtonText: "확인",
   });
 };
-
-
-
 
 /**
  * Mobile(Android, IOS) Activity Controller

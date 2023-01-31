@@ -14,7 +14,7 @@ export class MemoryMainRepository {
       code: "GUKBOB",
       latitude: 35.87583123506328,
       longitude: 128.6817532073904,
-      visited: "N",
+      visited: "Y",
     },
     {
       no: 3,

@@ -103,14 +103,5 @@ dist
 # TernJS port file
 .tern-port
 
-
-certificate
-
-src/file/receipt
-src/file/pregnant_confirm
-src/file/birth_certificate
-
-assets/
 build/
-file/
 .idea

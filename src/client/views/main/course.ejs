@@ -20,9 +20,11 @@
         data-longitude="<%= course[i].longitude %>"
         data-visited="<%= course[i].visited %>"
       >
+      <% if (course[i].visited === "Y") { %>
         <div class="mark-wrap">
           <img src="/file/complete.png" />
         </div>
+      <% } %>
         <p><%= course[i].name %></p>
       </li>
     <% } %>
