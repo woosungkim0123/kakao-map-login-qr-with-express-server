@@ -38,9 +38,25 @@
     if(bottomMenu.dataset.url === url) bottomMenu.classList.add("on");
     else bottomMenu.addEventListener("click", movePage);
   })
-
-  const output = (qrCode) => {
-    alert(qrCode);
+  const toastMessage = (message) => {
+    Swal.mixin({
+      toast: true,
+      position: "bottom",
+      showConfirmButton: false,
+      timer: 2000,
+    }).fire({ title: `${message}`, icon: "error" });
+  }
+  const output = async (qrCode) => {
+    const data = await (await fetch("/qr", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ code: qrCode }),
+    })).json();
+    if(data.code === "OK") location.href = "/course"
+    else toastMessage(data.message)
   }
 
 </script>

@@ -1,7 +1,7 @@
 {
-  "name": "knu-female-mentoring",
+  "name": "Yonggye Station Tour",
   "version": "1.0.0",
-  "description": "경북대 총여성동창회 커리어 멘토링",
+  "description": "용계역 여행",
   "scripts": {
     "start": "node build/server/bin/www.js",
     "build": "babel src -d build",

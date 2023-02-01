@@ -4,7 +4,7 @@ import {
   getCourse,
   getHome,
   getQr,
-  getUsed,
+  getUsed, postQr,
 } from "../controller/mainController";
 
 const mainRouter = express.Router();
@@ -12,6 +12,6 @@ const mainRouter = express.Router();
 mainRouter.get("/", getHome);
 mainRouter.get("/used", getUsed);
 mainRouter.get("/course", getCourse);
-mainRouter.route("/qr").get(getQr);
+mainRouter.route("/qr").get(getQr).post(postQr);
 
 export default mainRouter;

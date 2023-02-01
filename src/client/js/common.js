@@ -67,13 +67,7 @@ const getParameterByName = (name) => {
 };
 
 const errorMsg = (msg) => {
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "bottom",
-    showConfirmButton: false,
-    timer: 2000,
-  });
-  Toast.fire({ title: `${msg}`, icon: "error" });
+
 };
 
 const alert = (text, title) => {

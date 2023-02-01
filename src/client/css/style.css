@@ -21,10 +21,10 @@
 
 .used-title-wrap { color: #a1805f; text-align: center; margin: 0 auto; padding: 30px; font-size: 20px; font-family: 'Pretendard-ExtraBold' !important; letter-spacing: 2px; }
 .used-content-wrap { font-family: "Pretendard-Medium"; padding: 0 40px; font-size: 18px; text-align: center; font-weight: bold; }
-.used-content-wrap p { line-height: 2;}
+.used-content-wrap p { line-height: 2; font-size: 14px; }
 
 /* course */
-.course-wrap { display: flex; flex-wrap: wrap; padding: 20px 0; margin-bottom: 20px; }
+.course-wrap { display: flex; flex-wrap: wrap; padding: 20px 10px; }
 .course-wrap .course { position: relative; width: 31%; text-align: center; border: 2px solid; border-radius: 30px; margin: 1%; padding: 1vh 0; font-weight: 500; border-color: rgb(221, 221, 221); background-color: rgb(238, 238, 238); font-family: "Pretendard-Medium"; }
 .course-wrap .course.on { border-color: #758cff !important; background-color: #758cff !important; color: #fff;}
 .course-wrap .course .mark-wrap { position: absolute;  width: 60px; height: 30px; right: 0; top: -10px; z-index: 15; }
