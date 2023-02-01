@@ -14,11 +14,12 @@
 .content-container {  width: 100vw;  min-height: calc(100vh - 170px);  margin-top: 110px; }
 
 /* home */
-.main-background { width: 100vw; height: calc(100vh - 60px);}
-.main-background img { width: 100%; height: 100%; }
+.main-background { width: 100vw; height: calc(100vh - 60px); display: flex; justify-content: center; align-items: center; flex-direction: column; }
+.main-background .title { font-size: 25px; font-width: bold;}
+.main-background .img-wrap { width: 220px; height: 220px; border-radius: 50%; overflow: hidden; margin-top: 20px; }
+.main-background .img-wrap img { width: 100%; height: 100%; }
 
 /* used */
-
 .used-title-wrap { color: #a1805f; text-align: center; margin: 0 auto; padding: 30px; font-size: 20px; font-family: 'Pretendard-ExtraBold' !important; letter-spacing: 2px; }
 .used-content-wrap { font-family: "Pretendard-Medium"; padding: 0 40px; font-size: 18px; text-align: center; font-weight: bold; }
 .used-content-wrap p { line-height: 2; font-size: 14px; }

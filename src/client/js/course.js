@@ -53,11 +53,11 @@ const drawMap = (latitude, longitude) => {
   map.setZoomable(false);
 };
 const addMarker = (data) => {
-  let imgUrl = "/file/no-done.jpg";
+  let imgUrl = "/file/map_not_done.png";
   let imgSize = new kakao.maps.Size(24, 35);
 
   if (data.visited === "Y") {
-    imgUrl = "/file/map_complete.png";
+    imgUrl = "/file/map_complete.jpg";
     imgSize = new kakao.maps.Size(20, 30);
   }
   new kakao.maps.Marker({
@@ -74,11 +74,10 @@ const staticMarker = () => {
   }
 };
 const addUserMarker = (position) => {
-  console.log('hello1')
+  if(marker) marker.setMap(null);
   marker = new kakao.maps.Marker({ position });
   marker.setMap(map);
   //markers.push(marker);
-  console.log('hello2')
 };
 for (let i = 0; i < course.length; i++) {
   courseData.push({
@@ -99,7 +98,7 @@ if (navigator.geolocation) {
     //addUserMarker(new kakao.maps.LatLng(userLatitude, userLongitude));
   });
   navigator.geolocation.watchPosition((pos) => {
-    marker = [];
+
     userLatitude = pos.coords.latitude;
     userLongitude = pos.coords.longitude;
     addUserMarker(new kakao.maps.LatLng(userLatitude, userLongitude));
@@ -110,8 +109,6 @@ if (navigator.geolocation) {
 
 
 function delMarkers() {
-
-  // console.log(markers)
-  // for (let i = 0; i < markers.length; i++) markers[i].setMap(null);
+ // for (let i = 0; i < markers.length; i++) markers[i].setMap(null);
   // markers = [];
 }
