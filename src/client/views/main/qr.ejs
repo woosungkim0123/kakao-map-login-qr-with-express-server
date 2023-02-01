@@ -1,21 +1,18 @@
 <%-include('../components/header.ejs') %>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/client/library/jsQR.js"></script>
-
-  </head>
-  <body>
-    <nav class="flex-c-c-c component-title-nav">
-      <p class="flex-c-c nav-title theme-font">GPS 카카오 연동</p>
-      <div class="flex-c-c nav-sub-title">QR인증</div>
-    </nav>
-
-    <div class="content-container">
-      <div class="qr-container">
-        <p class="wait-text">화면을 인식중입니다.</p>
-      </div>  
-      <div class="flex-c-c canvas-wrap">
-        <canvas id="canvas" width="300" height="300"></canvas>
-      </div>
+<script src="/client/library/jsQR.js"></script>
+</head>
+<body>
+  <nav class="nav-container">
+    <p class="nav-title theme-font">용계역 여행</p>
+    <div class="nav-sub-title">QR 인증</div>
+  </nav>
+  <div class="content-container">
+    <div class="qr-container">
+      <p class="wait-text">화면을 인식중입니다.</p>
     </div>
+    <div class="canvas-wrap">
+      <canvas id="canvas" width="300" height="300"></canvas>
+    </div>
+  </div>
     <script src="/client/js/qr.js"></script>
 <%-include('../components/footer.ejs') %>
