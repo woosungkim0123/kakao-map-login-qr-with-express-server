@@ -93,14 +93,15 @@ for (let i = 0; i < course.length; i++) {
   });
   course[i].addEventListener("click", clickMenu);
 }
+loadingToggle();
 if (navigator.geolocation) {
-  loadingToggle();
+
   navigator.geolocation.getCurrentPosition((pos) => {
     userLatitude = pos.coords.latitude;
     userLongitude = pos.coords.longitude;
     drawMap(userLatitude, userLongitude);
     staticMarker();
-    //addUserMarker(new kakao.maps.LatLng(userLatitude, userLongitude));
+    loadingToggle();
   });
   navigator.geolocation.watchPosition((pos) => {
 
@@ -109,12 +110,4 @@ if (navigator.geolocation) {
     addUserMarker(new kakao.maps.LatLng(userLatitude, userLongitude));
     if (clickPosition === "USER") panTo(userLatitude, userLongitude);
   });
-  loadingToggle();
-}
-
-
-
-function delMarkers() {
- // for (let i = 0; i < markers.length; i++) markers[i].setMap(null);
-  // markers = [];
 }
