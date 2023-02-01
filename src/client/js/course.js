@@ -1,4 +1,5 @@
 const course = document.querySelectorAll(".course");
+const loadingContainer = document.querySelector(".loading-container");
 const locationMap = document.getElementById("location-map");
 const USER = "USER";
 const OTHER = "OTHER";
@@ -9,7 +10,10 @@ let marker;
 let userLatitude;
 let userLongitude;
 let clickPosition = "USER";
-let markers = [];
+
+const loadingToggle = () => {
+  loadingContainer.classList.toggle("hidden");
+}
 
 const menuStyleChange = (clickDom) => {
   for (let i = 0; i < course.length; i++) {
@@ -90,6 +94,7 @@ for (let i = 0; i < course.length; i++) {
   course[i].addEventListener("click", clickMenu);
 }
 if (navigator.geolocation) {
+  loadingToggle();
   navigator.geolocation.getCurrentPosition((pos) => {
     userLatitude = pos.coords.latitude;
     userLongitude = pos.coords.longitude;
@@ -104,6 +109,7 @@ if (navigator.geolocation) {
     addUserMarker(new kakao.maps.LatLng(userLatitude, userLongitude));
     if (clickPosition === "USER") panTo(userLatitude, userLongitude);
   });
+  loadingToggle();
 }
 
 

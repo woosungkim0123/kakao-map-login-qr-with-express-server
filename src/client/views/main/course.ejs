@@ -3,14 +3,19 @@
 <script src="/client/js/course.js" defer></script>
 </head>
 <body>
+
   <nav class="nav-container">
     <p class="nav-title theme-font">용계역 여행</p>
     <div class="nav-sub-title">코스안내</div>
   </nav>
 
   <div class="content-container">
-    <div class="test hidden" style="width: 300px; height: 100px; position:fixed; bottom: 100px; left:50%; transform: translateX(-50%); background-color: rgba(0,0,0,0.5); z-index: 99;">
+    <div class="loading-container hidden">
+      <div class="loading-wrap">
+        <div class="loading loading--full-height"></div>
+      </div>
     </div>
+
     <ul class="course-wrap">
     <% for (let i = 0; i < course.length; i++) {%>
       <li class="course" 

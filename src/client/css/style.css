@@ -11,7 +11,7 @@
 .nav-container .nav-sub-title { width: 100%; height: 55px; background: #ce3236;  color:#fff;  font-size: 18px;  font-weight: bold; display: flex; justify-content: center; align-items: center; }
 
 /* common */
-.content-container {  width: 100vw;  min-height: calc(100vh - 170px);  margin-top: 110px; }
+.content-container {  width: 100%; height: calc(100vh - 170px);  margin-top: 110px; position: relative; }
 
 /* home */
 .main-background { width: 100vw; height: calc(100vh - 60px); display: flex; justify-content: center; align-items: center; flex-direction: column; }
@@ -30,11 +30,7 @@
 .course-wrap .course.on { border-color: #758cff !important; background-color: #758cff !important; color: #fff;}
 .course-wrap .course .mark-wrap { position: absolute;  width: 60px; height: 30px; right: 0; top: -10px; z-index: 15; }
 .course-wrap .course .mark-wrap img { width: 100%; height: 100%; }
-#location-map {
-  width: 90%;
-  height: 400px;
-  margin:0 auto;
-}
+#location-map { width: 90%; height: 50vh; margin:0 auto; }
 
 
 
