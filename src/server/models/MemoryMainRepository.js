@@ -1,7 +1,6 @@
 export class MemoryMainRepository {
   courses = [
-    {
-      no: 1,
+    { no: 1,
       name: "영진",
       code: "YUNGJIN",
       latitude: 35.87555082502176,
@@ -36,10 +35,10 @@ export class MemoryMainRepository {
   async findAllCourse() {
     return this.courses;
   }
-  async findOne (code) {
-    return this.courses.find(e => e.code === code);
+  async findOne(code) {
+    return this.courses.find((e) => e.code === code);
   }
-  async updateStatus (code) {
-    this.courses = this.courses.map((course) => course.code === code ? {...course, visited: "Y"} : course);
+  async updateStatus(code) {
+    this.courses = this.courses.map((course) => course.code === code ? { ...course, visited: "Y" } : course );
   }
 }

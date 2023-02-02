@@ -81,7 +81,6 @@ const addUserMarker = (position) => {
   if(marker) marker.setMap(null);
   marker = new kakao.maps.Marker({ position });
   marker.setMap(map);
-  //markers.push(marker);
 };
 for (let i = 0; i < course.length; i++) {
   courseData.push({
@@ -104,7 +103,6 @@ if (navigator.geolocation) {
     loadingToggle();
   });
   navigator.geolocation.watchPosition((pos) => {
-
     userLatitude = pos.coords.latitude;
     userLongitude = pos.coords.longitude;
     addUserMarker(new kakao.maps.LatLng(userLatitude, userLongitude));

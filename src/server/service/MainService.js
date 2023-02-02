@@ -1,7 +1,12 @@
-import { MemoryMainRepository } from "../models/MemoryMainRepository.js";
+import { Error } from "../error/Error";
+import { DbMainRepository } from "../models/DbMainRepository";
+import { MemoryMainRepository } from "../models/MemoryMainRepository";
 
 export class MainService {
+  // 메모리 저장소
   static repository = new MemoryMainRepository();
+  // 데이터베이스 이용시
+  // static repository = new DbMainRepository();
 
   static async getAllCourse() {
     return await this.repository.findAllCourse();
@@ -9,10 +14,9 @@ export class MainService {
 
   static async updateVisitedStatus(code) {
     const course = await this.repository.findOne(code);
-    if(!course) throw { status : 404, code : "NOT_FOUND", message : "요청하신 QR 정보가 존재하지 않습니다." };
-    if(course.visited === "Y") throw { status : 409, code : "CONFLICT", message : "이미 완료된 코스입니다." };
+    if (!course) throw Error.NOT_FOUND;
+    if (course.visited === "Y") throw Error.CONFLICT;
+
     await this.repository.updateStatus(code);
-    const a = await this.repository.findAllCourse();
-    console.log(a)
   }
 }

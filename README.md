@@ -1,7 +1,5 @@
 # 설치
 
-## npm i -g nodemon
-
 ## npm i
 
 ### 추천 사이트 : https://codepen.io/

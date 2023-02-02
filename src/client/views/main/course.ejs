@@ -3,12 +3,10 @@
 <script src="/client/js/course.js" defer></script>
 </head>
 <body>
-
   <nav class="nav-container">
     <p class="nav-title theme-font">용계역 여행</p>
     <div class="nav-sub-title">코스안내</div>
   </nav>
-
   <div class="content-container">
     <div class="loading-container hidden">
       <div class="loading-wrap">
@@ -17,22 +15,20 @@
     </div>
 
     <ul class="course-wrap">
-    <% for (let i = 0; i < course.length; i++) {%>
+      <% for (let i=0; i < course.length; i++) {%>
       <li class="course" 
         data-name="<%= course[i].name %>" 
-        data-code="<%= course[i].code %>" 
+        data-code="<%= course[i].code %>"
         data-latitude="<%= course[i].latitude %>" 
         data-longitude="<%= course[i].longitude %>"
         data-visited="<%= course[i].visited %>"
       >
-      <% if (course[i].visited === "Y") { %>
-        <div class="mark-wrap">
-          <img src="/file/complete.png" />
-        </div>
-      <% } %>
+        <% if (course[i].visited==="Y" ) { %>
+        <div class="mark-wrap"><img src="/file/complete.png" /></div>
+        <% } %>
         <p><%= course[i].name %></p>
       </li>
-    <% } %>
+      <% } %>
       <li class="course on" data-code="USER">현재 위치</li>
     </ul>
     <div id="location-map"></div>

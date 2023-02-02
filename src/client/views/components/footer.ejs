@@ -20,8 +20,7 @@
 </footer>
 <script>
   const bottomMenus = document.querySelectorAll(".bottom-menu");
-  const url = window.location.pathname;
- 
+
   const phoneTypeCheck = () => {
     if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) return 'ios';
     else if (/Android/i.test(navigator.userAgent)) return 'android';
@@ -30,12 +29,13 @@
 
   const movePage = (e) => {
     const clickUrl = e.currentTarget.dataset.url;
-    if(clickUrl === "/qr" && phoneTypeCheck() != "pc") return window.HybridApp.QR_Btn();
+    if (clickUrl === "/qr" && phoneTypeCheck() != "pc") return window.HybridApp.QR_Btn();
     location.href = clickUrl;
   }
-  
+
   bottomMenus.forEach((bottomMenu) => {
-    if(bottomMenu.dataset.url === url) bottomMenu.classList.add("on");
+    const url = window.location.pathname;
+    if (bottomMenu.dataset.url === url) bottomMenu.classList.add("on");
     else bottomMenu.addEventListener("click", movePage);
   })
   const toastMessage = (message) => {
@@ -55,10 +55,11 @@
       },
       body: JSON.stringify({ code: qrCode }),
     })).json();
-    if(data.code === "OK") location.href = "/course"
+    if (data.code === "OK") location.href = "/course"
     else toastMessage(data.message)
   }
 
 </script>
 </body>
+
 </html>
