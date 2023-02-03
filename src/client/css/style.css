@@ -36,3 +36,5 @@
 .qr-container { width: 100%; padding-top: 30px; }
 .wait-text { text-align: center; font-weight: bold; font-size:20px; }
 .canvas-wrap { display: flex; align-items: center; justify-content: center; padding-top: 50px; }
+
+.a { color: blue; }
