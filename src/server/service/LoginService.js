@@ -1,8 +1,8 @@
 import { Error } from "../error/Error";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { MemoryUsersRepository } from "../models/MemoryUsersRepository";
-import { DbUsersRepository } from "../models/DbUsersRepository";
+import { MemoryUsersRepository } from "../models/MemoryUsersRepository.js";
+import { DbUsersRepository } from "../models/DbUsersRepository.js";
 
 export class LoginService {
   // 메모리 저장소

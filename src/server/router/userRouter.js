@@ -1,8 +1,8 @@
 "use strict";
 import express from "express";
-import { getJoin, getLoign, postJoin, postLogin, postLogout } from "../controller/LoginController";
-import { logoutCheck } from "../middleware/loginCheck";
-import { joinForm, loginForm } from "../middleware/validation";
+import { getJoin, getLoign, postJoin, postLogin, postLogout } from "../controller/loginController.js";
+import { logoutCheck } from "../middleware/loginCheck.js";
+import { joinForm, loginForm } from "../middleware/validation.js";
 
 const userRouter = express.Router();
 
