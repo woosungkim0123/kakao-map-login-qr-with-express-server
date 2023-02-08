@@ -1,7 +1,7 @@
 /* footer */
 .footer-container { position: fixed; bottom:0; left:0; right:0; height: 60px; border-top: solid 1px rgb(153, 150, 150); z-index: 20; background-color: #fff; }
 .footer-container .footer-wrap { display: flex; align-items: center; height: 100%; }
-.footer-container .footer-wrap .bottom-menu { width: 25%; height: 100%; }
+.footer-container .footer-wrap .bottom-menu { width: 20%; height: 100%; }
 .footer-container .footer-wrap .bottom-menu { display: flex; justify-content: space-evenly; align-items: center; flex-direction: column; height:100%; }
 .footer-container .footer-wrap .bottom-menu.on { color: red; }
 
@@ -38,3 +38,28 @@
 .canvas-wrap { display: flex; align-items: center; justify-content: center; padding-top: 50px; }
 
 .b { color: red; }
+
+
+/* login */
+.login-container { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column;}
+.login-container .title { font-size: 25px; margin-bottom: 20px;}
+.login-form { background-color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 0 50px; height: 100%; text-align: center; }
+.login-form input { background-color: #eee; border: none; padding: 12px 15px; margin: 8px 0; width: 100%; }
+.login-form .login-btn { margin-top: 20px; border-radius: 20px; border: 1px solid #FF4B2B; background-color: #FF4B2B; color: #FFFFFF;font-size: 12px;font-weight: bold; padding: 12px 45px; letter-spacing: 1px; text-transform: uppercase; transition: transform 80ms ease-in; }
+.login-form .login-btn:active { transform: scale(0.95); }
+.login-form .login-btn:focus { outline: none; }
+.login-form .join-btn { font-size: 14px; margin-top: 20px; font-weight: bold;}
+
+/* mypage */
+.mypage-name { font-size: 20px; }
+.mypage-name span { font-size: 25px;}
+.mypage-btn-wrap { margin-top: 20px; }
+.mypage-btn-wrap li { font-weight: bold; font-size: 20px; background-color: rgb(135, 135, 191); padding: 20px 90px; }
+
+/* join */
+.join-container { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column;}
+.join-container .back-btn { position: absolute; top: 30px; left: 30px; font-weight: bold; }
+.join-container .title { font-size: 25px; margin-bottom: 20px;}
+.join-form { background-color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 0 50px; height: 100%; text-align: center; }
+.join-form input { background-color: #eee; border: none; padding: 12px 15px; margin: 8px 0; width: 100%; }
+.join-form .join-btn { margin-top: 20px; border-radius: 20px; border: 1px solid #22f74c; background-color: #22f74c; color: #000000;font-size: 12px;font-weight: bold; padding: 12px 45px; letter-spacing: 1px; text-transform: uppercase; transition: transform 80ms ease-in; }

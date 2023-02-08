@@ -12,7 +12,10 @@ export const getCourse = async (req, res) => {
   return res.render("main/course", { course });
 };
 export const getQr = (req, res) => res.render("main/qr");
-
+export const getMypage = (req, res) => {
+  const { name } = req.user;
+  res.render("main/mypage", { name })
+}
 /**
  * POST Request Controller
  */
