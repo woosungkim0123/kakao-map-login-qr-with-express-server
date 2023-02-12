@@ -31,3 +31,13 @@ export const postQr = async (req, res) => {
     else return res.status(Error.INTERNAL_SERVER_ERROR.status).json(Error.INTERNAL_SERVER_ERROR);
   }
 };
+
+export const postCourse = async (req, res) => {
+  try {
+    const course = await MainService.getAllCourse();
+    return res.status(200).json({ code: "OK", course });
+  } catch (e) {
+    if (e.code) return res.status(e.status).json({ code: e.code, message: e.message });
+    else return res.status(Error.INTERNAL_SERVER_ERROR.status).json(Error.INTERNAL_SERVER_ERROR);
+  }
+}
