@@ -14,7 +14,7 @@ const mainRouter = express.Router();
 mainRouter.get("/", loginCheck, getHome);
 mainRouter.get("/used", loginCheck, getUsed);
 mainRouter.get("/course", loginCheck, getCourse);
-mainRouter.get("/course", postCourse);
+mainRouter.post("/course", postCourse);
 mainRouter.route("/qr").get(loginCheck, getQr).post(postQr);
 mainRouter.get("/mypage", loginCheck, getMypage);
 
