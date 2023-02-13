@@ -10,7 +10,7 @@ app.set("view engine", "ejs");
 app.set("views", "src/client/views");
 
 app.use(cors({
-  origin: "https://master--candid-halva-4d19f5.netlify.app",
+  origin: ["https://master--candid-halva-4d19f5.netlify.app", "http://localhost:3000"],
   method: "GET, POST, PUT, DELETE, PATCH",
   credentials: true,
 }));
