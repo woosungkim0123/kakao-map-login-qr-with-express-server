@@ -18,7 +18,7 @@ export class UserService {
     const hashedPw = await bcrypt.hash(pw, 8);
     const { insertId } = await this.repository.save({ id, pw: hashedPw, name })
     const token = this._createJwtToken(insertId);
-    return { token, user : { id ,name }};
+    return { token, user : { u_id: id , u_name : name }};
   }
   static async login({id, pw}) {
     const user = await this.repository.findById(id);
