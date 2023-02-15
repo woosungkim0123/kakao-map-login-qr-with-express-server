@@ -14,3 +14,8 @@ export const joinForm = (req, res, next) => {
   else if(!name) return res.status(Error.NAME_EMPTY.status).json(Error.NAME_EMPTY);
   next();
 }
+export const qrForm = (req, res, next) => {
+  const { code } = req.body;
+  if(!code) return res.status(Error.QR_EMPTY.status).json(Error.QR_EMPTY);
+  next();
+}

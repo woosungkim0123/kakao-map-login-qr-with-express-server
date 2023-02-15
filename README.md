@@ -1,7 +1,1 @@
-# 설치
-
-## npm i
-
-### 추천 사이트 : https://codepen.io/
-### 유튜브 : https://www.youtube.com/watch?v=cpEeqACsF_Q
-### https://codepen.io/dissimulate/pen/nYQrNP
+### ejs 템플릿 사용하는 서버 => 프론트를 react로 변경, 데이터만 내려주는 서버

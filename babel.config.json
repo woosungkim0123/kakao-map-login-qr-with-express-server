@@ -1,4 +1,3 @@
 {
-  "presets": ["@babel/preset-env"],
-  "ignore": ["src/client"]
+  "presets": ["@babel/preset-env"]
 }
