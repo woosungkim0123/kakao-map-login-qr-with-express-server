@@ -1,4 +1,4 @@
-import { Error } from "../error/Error";
+import Exception from "../handler/Exception";
 
 export const loginForm = (req, res, next) => {
   const { id, pw } = req.body;
@@ -15,7 +15,8 @@ export const joinForm = (req, res, next) => {
   next();
 }
 export const qrForm = (req, res, next) => {
-  const { code } = req.body;
-  if(!code) return res.status(Error.QR_EMPTY.status).json(Error.QR_EMPTY);
+  const { qrCode, latitude, longitude } = req.body;
+  if(!qrCode) return res.status(Exception.QR_EMPTY.statusCode).json(Exception.QR_EMPTY);
+  else if(!latitude || !longitude) return res.status(Exception.LOCATION_EMPTY.statusCode).json(Exception.LOCATION_EMPTY);
   next();
 }

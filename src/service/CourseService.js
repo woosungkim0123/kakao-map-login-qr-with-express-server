@@ -1,18 +1,19 @@
-import { Error } from "../error/Error";
-import { CourseRepository } from "../models/CourseRepository";
+import Exception from "../handler/Exception";
+import { CourseRepository } from "../repository/CourseRepository";
 
-export class CourseService {
-  static repository = CourseRepository;
 
-  static async getAllCourse(u_no) {
-    return await this.repository.findAllCourse(u_no);
-  }
+export const updateCourseVisitedStatus = async ({ user, qrCode, latitude, longitude }) => {
+  console.log(user, qrCode, latitude, longitude) 
+  const course = await CourseRepository.findCourseByQrCode(qrCode);
+  if (!course) throw Exception.QR_BAD_REQUEST;
+  const isVisited = await CourseRepository.findUsersCourse(user.user_no, course.course_no);
+  if (isVisited) throw Exception.ALREADY_VISTED;
+  console.log(isVisited)
+  // 반경원로직 생각해야함
+  
 
-  static async updateVisitedStatus({ u_no, code }) {
-    const course = await this.repository.findOne({ u_no, code });
-    if (!course) throw Error.NOT_FOUND;
-    if (course.visited === "Y") throw Error.CONFLICT;
+  const { u_no } = user;
 
     await this.repository.updateStatus({ u_no, c_no : course.c_no });
-  }
 }
+
