@@ -1,9 +1,20 @@
 import express from "express";
 import cors from "cors";
-import userRouter from "./router/userRouter";
-import courseRouter from "./router/courseRouter";
+import courseRouter from "./controller/courseRouter";
+import webRootViewRouter from "./controller/web/webRootViewRouter";
+import authRouter from "./controller/authRouter";
 
 const app = express();
+
+/**
+ * 템플릿 뷰 엔진을 ejs로 설정합니다
+ * ejs는 HTML을 동적으로 생성하기 위해 사용하는 템플릿 엔진입니다.
+ */
+app.set("view engine", "ejs");
+/**
+ * view의 위치를 설정합니다.
+ */
+app.set("views", process.cwd() + "/src/client/html");
 
 /**
  * CORS (Cross-Origin Resource Sharing)는 웹 페이지의 요청 도메인과 응답 도메인이 다를 때
@@ -33,9 +44,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-app.use("/file", express.static("file"));
 
-app.use("/api/users", userRouter);
+
+
+app.use("/css", express.static("src/client/css"));
+app.use("/js", express.static("src/client/js"));
+app.use("/file", express.static("src/client/file"));
+
+// api
+app.use("/api/auth", authRouter);
 app.use("/api/course", courseRouter);
+
+
+// web
+app.use("/", webRootViewRouter)
 
 export default app;
