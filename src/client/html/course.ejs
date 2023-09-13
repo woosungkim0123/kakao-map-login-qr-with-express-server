@@ -1,0 +1,43 @@
+<%- include('common/header.ejs') %>
+  <div class="container empty-background">
+    <nav class="nav">
+      <p class="title">용계역 여행</p>
+      <div class="sub-title">코스 리스트</div>
+    </nav>
+
+    <div class="content-container">
+      <ul class="course_detail_btn mb-20">
+        <li id="young-jin" class="course">
+          <div class="hidden mark-wrap young-jin-mark">
+            <img class="w100-h100" src="/client/file/complete.png" />
+          </div>
+          <p>영진</p>
+        </li>
+        <li id="guk-bob" class="course">
+          <div class="hidden mark-wrap guk-bob-mark">
+            <img class="w100-h100" src="/client/file/complete.png" />
+          </div>
+          <p>국밥</p>
+        </li>
+        <li id="jeju-pig" class="course">
+          <div class="hidden mark-wrap jeju-pig-mark">
+            <img class="w100-h100" src="/client/file/complete.png" />
+          </div>
+        <p>흑돈</p>
+      </li>
+        <li id="subway" class="course" >
+          <div class="hidden mark-wrap subway-mark">
+            <img class="w100-h100" src="/client/file/complete.png" />
+          </div>
+        <p>지하철 출구</p>
+      </li>
+        <li id="my-position" class="course" >나의 위치</li>
+      </ul>
+      <div id="location-map"></div>
+    </div>
+
+  </div>
+  <%- include('common/footer.ejs') %>
+  <script src="/js/course.js"></script>
+</body>
+</html>
