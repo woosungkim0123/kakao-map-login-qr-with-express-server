@@ -1,43 +1,25 @@
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { UserRepository } from "../models/UserRepository.js";
-import { Error } from "../error/Error.js";
+import UserRepository from "../repository/UserRepository.js";
+import Exception from "../handler/Exception.js";
 
-export class UserService {
-  static repository = UserRepository;
-  static jwtSecretKey = process.env.SECRET_KEY;
-  static jwtExpire = process.env.JWT_EXPIRE
+export const userJoinService = async ({ userId, userPassword, userName }) => {
+  const user = await UserRepository.findById(userId);
+  if(user) throw Exception.ID_EXIST;
+  const hashedPw = await bcrypt.hash(userPassword, 8);
+  await UserRepository.save({ user_id : userId, password : hashedPw, username : userName })
+}
 
-  static _createJwtToken(no) {
-    return jwt.sign({ no }, this.jwtSecretKey, { expiresIn: this.jwtExpire });
-  }
-  static async join({ id, pw, name }) {
-    const user = await this.repository.findById(id);
-    if(user) throw Error.ID_EXIST;
-    const hashedPw = await bcrypt.hash(pw, 8);
-    const { insertId } = await this.repository.save({ id, pw: hashedPw, name })
-    const token = this._createJwtToken(insertId);
-    return { token, user : { u_id: id , u_name : name }};
-  }
-  static async login({id, pw}) {
-    const user = await this.repository.findById(id);
-    if(!user) throw Error.UN_AUTHORIZED;
-    const isValidPassword = await bcrypt.compare(pw, user.u_pw);
-    if(!isValidPassword) throw Error.UN_AUTHORIZED;
-    const token = this._createJwtToken(user.u_no);
-    delete user.u_no;
-    delete user.u_pw;
-    return { token, user };
-  }
-  
-  static async findUser(no) {
-    const user = await this.repository.findByNo(no);
-    if(!user) throw Error.NOT_USER_FOUND;
+export const userLoginService = async ({ userId, userPassword }) => {
+  const user = await UserRepository.findById(userId);
+  if(!user) throw Exception.NOT_USER_FOUND;
+  if (!await passwordCheck(userPassword, user.user_password)) throw Exception.NOT_EQUAL_PASSWORD;
 
-    delete user.u_no;
-    delete user.u_pw;
+  const accessToken = jwt.sign({ no: user.user_no }, process.env.SECRET_KEY, { expiresIn: process.env.JWT_EXPIRE });
+  return { accessToken };
+}
 
-    return user;
-  }
+const passwordCheck = async (userPassword, databasePassword) => {
+  return await bcrypt.compare(userPassword, databasePassword);
 }
