@@ -10,14 +10,13 @@ const courseCheckFetch = async (qrCode) => {
     window.location.href = "/login?error=need_login";
   }
   
-  // if(!qrCode) {
-  //   msgAlert("bottom", "잘못된 qr코드입니다.", "error");
-  //   setTimeout(startScan, 3000);
-  //   return;
-  // }
+  if(!qrCode) {
+    msgAlert("bottom", "잘못된 qr코드입니다.", "error");
+    setTimeout(startScan, 3000);
+    return;
+  }
+
   // 내 위치 정보 가져오기
-
-
   const { coords } = await getCurrentPosition();
   if (!coords) {
     msgAlert("bottom", "위치정보를 가져올 수 없습니다.", "error");
@@ -40,30 +39,29 @@ const courseCheckFetch = async (qrCode) => {
       }),
     });  
     const result = await response.json();
-    console.log(result)
+
     if(response.status == 200) {
-      
-      console.log(result);
-      // msgAlert("center", "인증 성공", "success");
-      // setTimeout(() => {
-      //   window.location.href = "/";
-      // }, 1000); 
+      msgAlert("center", "방문 완료", "success");
+      setTimeout(() => {
+        window.location.href = "/course";
+      }, 1000); 
     } else if (response.status === 400) {
       if (result.message === "위치 정보 없음") msgAlert("bottom", "위치정보를 가져올 수 없습니다.", "error");
-      msgAlert("bottom", "잘못된 qr코드입니다.", "error");
+      else if (result.message === "위치 적용 범위 초과") msgAlert("bottom", "목표물의 100m 반경에 있어야합니다.", "error");
+      else msgAlert("bottom", "잘못된 qr코드입니다.", "error");
     } else if (response.status === 401) {
       if (result.message === "토큰 만료") return window.location.href = "/login?error=expired";
-      return window.location.href = "/login?error=need_login";
+      else return window.location.href = "/login?error=need_login";
     } else if (response.status === 409) {  
       msgAlert("bottom", "이미 방문한 코스입니다.", "error");
     } else {
       msgAlert("bottom", "서버 에러", "error");
     }
-    setTimeout(startScan, 3000);
   } catch(error) {
     console.error("Error:", error);
     msgAlert("bottom", "서버 통신 오류", "error");
   }
+  setTimeout(startScan, 3000);
 }
 
 function startScan() {
