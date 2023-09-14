@@ -1,7 +1,8 @@
 "use strict";
 
 import Exception from "../handler/Exception";
-import { updateCourseVisitedStatus } from "../service/CourseService";
+import ResponseBody from "../handler/ResponseBody";
+import { getCourseListWitUser, updateCourseVisitedStatus } from "../service/courseService";
 
 
 
@@ -10,8 +11,7 @@ export const qrCheck = async (req, res) => {
   const qrDto = req.body;
   try {
     await updateCourseVisitedStatus({ user, ...qrDto });
-    
-    return res.status(200).json({ code: "OK", message: "방문 완료" });
+    return res.status(200).json(new ResponseBody(200, "success", "방문 완료", ""));
   } catch (e) {
     console.error(e);
     if (e.statusCode) return res.status(e.statusCode).json({ statusCode: e.statusCode, statusText : e.statusText, message: e.message, data : e.data = "" });
@@ -19,13 +19,14 @@ export const qrCheck = async (req, res) => {
   }
 };
 
-export const courseVisitedInfo = async (req, res) => {
+export const getCourseList = async (req, res) => {
   try {
-    const u_no = req.u_no
-    const course = await CourseService.getAllCourse(u_no);
-    return res.status(200).json({ code: "OK", course });
+    const user = req.user;
+    const courseListDto = await getCourseListWitUser(user);
+    return res.status(200).json(new ResponseBody(200, "success", "코스 리스트 전송 완료", courseListDto));
   } catch (e) {
-    if (e.code) return res.status(e.status).json({ code: e.code, message: e.message });
-    else return res.status(Error.INTERNAL_SERVER_ERROR.status).json(Error.INTERNAL_SERVER_ERROR);
+    console.error(e);
+    if (e.statusCode) return res.status(e.statusCode).json({ statusCode: e.statusCode, statusText : e.statusText, message: e.message, data : e.data = "" });
+    else return res.status(500).json(Exception.INTERNAL_SERVER_ERROR);
   }
 }

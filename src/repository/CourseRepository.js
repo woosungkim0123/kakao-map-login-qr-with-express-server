@@ -1,10 +1,10 @@
 import db from "../config/db";
 
 export class CourseRepository {
-  static async findAllCourse(u_no) {
-    const QUERY = `SELECT *, IFNULL((SELECT 'Y' FROM visited WHERE user_no=? AND c_no=course_no), 'N') AS visited
-    FROM course  `;
-    return db.execute(QUERY,[u_no]).then((result) => result[0]);
+  static async findCourseListWithUser(user_no) {
+    const QUERY = `SELECT c.*, uc.user_courses_id 
+      FROM course c LEFT JOIN users_course uc ON c.course_no = uc.course_no AND uc.user_no=?`;
+    return db.execute(QUERY,[user_no]).then((result) => result[0]);
   }
 
   static async findCourseByQrCode(qrCode) {
@@ -17,12 +17,8 @@ export class CourseRepository {
     return db.execute(QUERY, [user_no, course_no]).then((result) => result[0][0]);
   }
 
-  static async findOne({u_no, code }) {
-    const QUERY = `SELECT *, IFNULL((SELECT 'Y' FROM visited WHERE user_no=? AND c_no=course_no), 'N') AS visited FROM course WHERE code = ?`;
-    return db.execute(QUERY, [u_no, code]).then((result) => result[0][0]);
-  }
-  static async updateStatus({ u_no, c_no }) {
-    const QUERY = `INSERT INTO visited (user_no, course_no) VALUES (?, ?)`;
-    db.execute(QUERY, [u_no, c_no]);
+  static async updateCourseVisited(user_no, course_no) {
+    const QUERY = `INSERT INTO users_course (user_no, course_no) VALUES (?, ?)`;
+    db.execute(QUERY, [user_no, course_no]);
   }
 }
