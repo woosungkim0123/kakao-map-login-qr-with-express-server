@@ -1,229 +1,196 @@
-// 요청
+const locationMap = document.getElementById("location-map");
 
+let clickCourse = 0;
+let courseListInfo;
+let isMapDrawn = false;
+let map;
+let markers = [];
+let userLatitude;
+let userLongitude;
 
-async function qrData요청하기(type) {
+/**
+ * 서버에 요청을해 코스 리스트 정보를 가져옵니다.
+ */
+const getCourseList = async () => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+    window.location.href = "/login?error=need_login";
+  }
   try {
-      const 응답 = await fetch("/api/course", {
-          method: "GET",
-          headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-          },
-          body: JSON.stringify({ type: type }),
-      });
+    const response = await fetch('/api/course', {
+      headers: { Authorization: `Bearer ${accessToken}` }
+    });  
+    
+    if(response.status == 200) {
+      const result = await response.json();
+      courseListInfo = result.data;
+    } else if (response.status === 401) {
+      if (result.message === "토큰 만료") return window.location.href = "/login?error=expired";
+      else return window.location.href = "/login?error=need_login";
+    } 
+  } catch(error) {
+    console.error("Error:", error);
+    return msgAlert("bottom", "서버 통신 오류", "error");
+  }
+  afterGetCourseList();
+}
+const afterGetCourseList = () => {
+  makeNavHtml(courseListInfo);
+  configureLocationWatch();
+}
 
-      const 데이터 = await 응답.json();
-      if (데이터.success) {
-          bottomMsg(type, "success");
-      } else {
-          bottomMsg("인증실패", "error");
-      }
-      setTimeout(startScan, 3000);
-  } catch (에러) {
-      console.error("오류 발생:", 에러);
-      // 필요하다면 여기서 에러 메시지를 보여주거나 추가적으로 에러를 처리할 수 있습니다.
+/**
+ * 코스 리스트 항목의 on css를 제거합니다.
+ */
+const deleteCourseListNav = () => {
+  const courseWrap = document.querySelectorAll(".course");
+  for (let i = 0; i < courseWrap.length; i++) {
+    courseWrap[i].classList.remove("on");
   }
 }
 
+/**
+ * 지도를 움직입니다.
+ */
+const panTo = (latitude, longitude) => {
+  const moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+  map.panTo(moveLatLon);
+};
 
+/**
+ * 코스 리스트 항목을 클릭할 때마다 실행되는 함수
+ */
+const clickCourseList = (e, courseNo) => {
+  if (clickCourse !== courseNo) {
+    deleteCourseListNav();
+    e.currentTarget.classList.add("on");
 
-const locationMap = document.getElementById("location-map");
-const locationBtn = document.querySelectorAll(".course");
-const youngJin = document.getElementById("young-jin");
-const gukBob = document.getElementById("guk-bob");
-const jejuPig = document.getElementById("jeju-pig");
-const subway = document.getElementById("subway");
-const myPosition = document.getElementById("my-position");
-const dbValue = document.getElementById("db-value").value;
-const dbArray = dbValue.split(",");
-const testContainer = document.querySelector(".test");
-// 영진 직업 전문 학원
-
-const YUNGJIN = [35.87555082502176, 128.6816374505427];
-const GUKBOB = [35.87583123506328, 128.6817532073904];
-const JEJUPIG = [35.87664030121222, 128.68155341448463];
-const SUBWAY2 = [35.87623769570281, 128.68104555230227];
-
-let map;
-let marker;
-let userLatitude;
-let userLongitude;
-let clickPosition = "user";
-let markers = [];
-let selectedMarker = null;
-
-changeBtnCss(4);
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition((pos) => {
-    userLatitude = pos.coords.latitude;
-    userLongitude = pos.coords.longitude;
-
-    drawMap(userLatitude, userLongitude);
-    staticMarkder();
-    addMarker(new kakao.maps.LatLng(userLatitude, userLongitude));
-  });
-  navigator.geolocation.watchPosition((pos) => {
-    delMarkers();
-    userLatitude = pos.coords.latitude;
-    userLongitude = pos.coords.longitude;
-    addMarker(new kakao.maps.LatLng(userLatitude, userLongitude));
-    if (clickPosition === "user") {
-      panTo(userLatitude, userLongitude);
+    let courseLatitude;
+    let courseLongitude;
+    if (courseNo === 0) {
+      courseLatitude = userLatitude;
+      courseLongitude = userLongitude;
+    } else {
+      let matchedCourse = courseListInfo.find(course => course.course_no === courseNo)
+      courseLatitude = matchedCourse.course_latitude;
+      courseLongitude = matchedCourse.course_longitude;
     }
-  });
+    panTo(courseLatitude, courseLongitude);
+    clickCourse = courseNo;
+  }
 }
 
-function addMarker(position) {
-  marker = new kakao.maps.Marker({
+/**
+ * 코스 정보를 바탕으로 항목 HTML을 만듭니다.
+ */
+const makeNavHtml = (courseList) => {
+  const courseWrap = document.getElementById("courseWrap");
+  let html = "";
+  for (let i = 0; i < courseList.length; i++) {
+    html += `<li class="course" onclick="clickCourseList(event, ${courseList[i].course_no})">`
+    if (courseList[i].user_courses_id) {
+      html += `<div class="mark-wrap"><img src="/file/complete.png" /></div>`
+    }
+    html += `<p>${courseList[i].course_name}</p>`
+    html += `<li>`
+  }
+  html += `<li id="myPosition" class="course on" onclick="clickCourseList(event, 0)">나의 위치</li>`
+  courseWrap.innerHTML = html;
+}
+
+/**
+ * 지도에 마커를 추가합니다.
+ */
+const addMarker = (position) => {
+  let marker = new kakao.maps.Marker({
     position: position,
   });
   marker.setMap(map);
   markers.push(marker);
 }
-function delMarkers() {
+
+/**
+ * 지도에서 마커를 지웁니다.
+ */
+const delMarkers = () => {
   for (let i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
   }
   markers = [];
 }
-function drawMyPosition(latitude, longitude) {
-  const latlng = new kakao.maps.LatLng(latitude, longitude);
 
-  marker = new kakao.maps.Marker({
-    map: map,
-    position: latlng,
-    title: "내위치",
-  });
-  marker.setMap(map);
-}
-
-function drawMap(latitude, longitude) {
+/**
+ * 지도를 그립니다.
+ */
+const drawMap = (latitude, longitude) => {
   const options = {
     center: new kakao.maps.LatLng(latitude, longitude),
     level: 2,
   };
-
   map = new kakao.maps.Map(locationMap, options);
   map.setZoomable(false);
 }
 
-function staticMarkder() {
-  const positions = [
-    {
-      title: "YUNGJIN",
-      latlng: new kakao.maps.LatLng(YUNGJIN[0], YUNGJIN[1]),
-      summary: "영진!",
-    },
-    {
-      title: "GUKBOB",
-      latlng: new kakao.maps.LatLng(GUKBOB[0], GUKBOB[1]),
-      summary: "국밥먹어봄?",
-    },
-    {
-      title: "JEJUPIG",
-      latlng: new kakao.maps.LatLng(JEJUPIG[0], JEJUPIG[1]),
-      summary: "제주돼지래..",
-    },
-    {
-      title: "SUBWAY2",
-      latlng: new kakao.maps.LatLng(SUBWAY2[0], SUBWAY2[1]),
-      summary: "지하철 너무멈",
-    },
-  ];
-
-  for (let i = 0; i < positions.length; i++) {
-    addStaticMarker(positions[i]);
-  }
+/**
+ * 카카오 지도 API에서 사용하는 마커 이미지를 생성합니다.
+ */
+const createMarkerImage = (url, markerSize) => {
+  return new kakao.maps.MarkerImage(url, markerSize);
 }
-function addStaticMarker(position) {
-  let markerImageUrl = "/client/file/no-done.jpg";
+
+/**
+ * 완주하지 않은 코스와 완주한 코스는 서로 다른 이미지로 정적인 마커로 추가합니다.
+ */
+const addCourseMarker = (course) => {
+  let markerImageUrl = "/file/map_not_done.png";
   let markerImageNormalSize = new kakao.maps.Size(24, 35);
-  let markerImageClickSize = new kakao.maps.Size(50, 65);
-  if (dbArray.includes(position.title)) {
-    markerImageUrl = "/client/file/complete.jpg";
-    markerImageNormalSize = new kakao.maps.Size(50, 35);
-    markerImageClickSize = new kakao.maps.Size(70, 65);
+  if (course.user_courses_id) {
+    markerImageUrl = "/file/map_complete.jpg";
+    markerImageNormalSize = new kakao.maps.Size(25, 35);
   }
   const normalImage = createMarkerImage(markerImageUrl, markerImageNormalSize);
-  const clickImage = createMarkerImage(markerImageUrl, markerImageClickSize);
-  const marker = new kakao.maps.Marker({
+  const latlng = new kakao.maps.LatLng(course.course_latitude, course.course_longitude);
+  new kakao.maps.Marker({
     map: map,
-    position: position.latlng,
-    title: position.title,
+    position: latlng,
+    title: course.course_name,
     image: normalImage,
   });
-
-  marker.normalImage = normalImage;
-
-  kakao.maps.event.addListener(marker, "click", function () {
-    testContainer.classList.remove("hidden");
-    testContainer.innerHTML = `<p style="color:#fff; font-weight:bold;">${position.title}은 ${position.summary}</p>`;
-    if (!selectedMarker || selectedMarker !== marker) {
-      !!selectedMarker && selectedMarker.setImage(selectedMarker.normalImage);
-      marker.setImage(clickImage);
-    }
-    selectedMarker = marker;
-  });
-}
-function createMarkerImage(url, markerSize) {
-  const markerImg = new kakao.maps.MarkerImage(url, markerSize);
-  return markerImg;
 }
 
-const panTo = (latitude, longitude) => {
-  const moveLatLon = new kakao.maps.LatLng(latitude, longitude);
-  map.panTo(moveLatLon);
-};
-function changeBtnCss(target) {
-  for (let i = 0; i < locationBtn.length; i++) {
-    if (target === i) {
-      locationBtn[i].classList.add("pick-on");
-    } else {
-      locationBtn[i].classList.remove("pick-on");
-    }
+/**
+ * 코스 리스트 정보를 가지고 반복하며 마커 추가 함수를 호출합니다.
+ */
+const setCourseMarker = () => {
+  for (let i = 0; i < courseListInfo.length; i++) {
+    addCourseMarker(courseListInfo[i]);
   }
 }
 
-function chekcingDone() {
-  for (let i = 0; i < dbArray.length; i++) {
-    if (dbArray[i] === "YUNGJIN") {
-      const youngJinMark = document.querySelector(".young-jin-mark");
-      youngJinMark.classList.remove("hidden");
-    } else if (dbArray[i] === "GUKBOB") {
-      const gukBobMark = document.querySelector(".guk-bob-mark");
-      gukBobMark.classList.remove("hidden");
-    } else if (dbArray[i] === "JEJUPIG") {
-      const jejuPigMark = document.querySelector(".jeju-pig-mark");
-      jejuPigMark.classList.remove("hidden");
-    } else if (dbArray[i] === "SUBWAY2") {
-      const subwayMark = document.querySelector(".subway-mark");
-      subwayMark.classList.remove("hidden");
-    }
+/**
+ * 위치 정보를 이동이 감지될 때마다 가져오고 실행시킵니다.
+ */
+const configureLocationWatch = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.watchPosition((pos) => {
+      delMarkers();
+      userLatitude = pos.coords.latitude;
+      userLongitude = pos.coords.longitude;
+
+      if (!isMapDrawn) {
+        drawMap(userLatitude, userLongitude);
+        setCourseMarker();
+        isMapDrawn = true;
+      }
+      addMarker(new kakao.maps.LatLng(userLatitude, userLongitude));
+
+      if (clickCourse === 0) {
+        panTo(userLatitude, userLongitude);
+      }
+    });
+  } else {
+    msgAlert("bottom", "위치 정보를 가져올 수 없습니다.", "error");
   }
 }
-chekcingDone();
-youngJin.addEventListener("click", function () {
-  changeBtnCss(0);
-  clickPosition = "other";
-  panTo(YUNGJIN[0], YUNGJIN[1]);
-});
-gukBob.addEventListener("click", function () {
-  changeBtnCss(1);
-  clickPosition = "other";
-  panTo(GUKBOB[0], GUKBOB[1]);
-});
-jejuPig.addEventListener("click", function () {
-  changeBtnCss(2);
-  clickPosition = "other";
-  panTo(JEJUPIG[0], JEJUPIG[1]);
-});
-subway.addEventListener("click", function () {
-  changeBtnCss(3);
-  clickPosition = "other";
-  panTo(SUBWAY2[0], SUBWAY2[1]);
-});
-myPosition.addEventListener("click", function () {
-  changeBtnCss(4);
-  clickPosition = "user";
-  panTo(userLatitude, userLongitude);
-});
+
+getCourseList();
