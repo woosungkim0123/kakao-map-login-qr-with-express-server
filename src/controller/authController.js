@@ -2,7 +2,7 @@
 
 import Exception from "../handler/Exception.js";
 import ResponseBody from "../handler/ResponseBody.js";
-import { userJoinService, userLoginService } from "../service/UserService.js";
+import { userJoinService, userLoginService } from "../service/userService.js";
 
 export const joinUser = async (req, res) => {
   const { userId, userPassword, userName } = req.body;

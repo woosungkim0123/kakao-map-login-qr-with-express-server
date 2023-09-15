@@ -2,7 +2,7 @@
 
 import Exception from "../handler/Exception";
 import ResponseBody from "../handler/ResponseBody";
-import { getCourseListWitUser, updateCourseVisitedStatus } from "../service/courseService";
+import { getCourseListWitUser, updateCourseVisitedStatus } from "../service/courseService.js";
 
 export const qrCheck = async (req, res) => {
   const user = req.user;
