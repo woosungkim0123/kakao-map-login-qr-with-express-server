@@ -10,7 +10,7 @@ package.json이 있는 위치에서 해당 명령어를 실행하면 됩니다.
 
 ### 개발
 nodemon을 활용한 실행 명령어
-```json
+```
 npm run dev
 ```
 
