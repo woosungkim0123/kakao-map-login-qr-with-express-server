@@ -1,4 +1,4 @@
-export default class responseBody {
+export default class ResponseBody {
   constructor (statusCode, statusText, message, data) {
     this.statusCode = statusCode;
     this.statusText = statusText;
