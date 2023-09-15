@@ -13,7 +13,6 @@ const authRouter = express.Router();
 passport.use(new KakaoStrategy({ clientID: clientId, callbackURL: callback }, handleKakaoLogin ));
 
 authRouter.get("/kakao", passport.authenticate("kakao", { session: false }));
-
 authRouter.get("/kakao/callback", (req, res, next) => {
   passport.authenticate("kakao", { session: false }, async (err, user, info) => {
     if (info) {
@@ -29,12 +28,9 @@ authRouter.get("/kakao/callback", (req, res, next) => {
     }
   })(req, res, next);
 });
-
 authRouter.get("/login/callback", (req, res) => res.redirect("/"));
-
 authRouter.post("/join", joinUser)
 authRouter.post("/login", loginUser)
-
 authRouter.post("/token/check", isAuth, authMe)
 
 export default authRouter;

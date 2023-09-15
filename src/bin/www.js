@@ -3,7 +3,7 @@ import "dotenv/config";
 import "regenerator-runtime";
 import app from "../app";
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 /**
  * 해당 포트로 백엔드 서버 오픈

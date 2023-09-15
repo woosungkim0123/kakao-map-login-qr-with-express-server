@@ -4,18 +4,22 @@ const userIdInput = document.getElementById("userId");
 const userPasswordInput = document.getElementById("userPassword");
 
 
-const notFoundAccessTokenError = getParameterByName("error")
+const checkError = () => {
+  const notFoundAccessTokenError = getParameterByName("error")
 
-if (notFoundAccessTokenError == "not_found_access_token") {
-  msgAlert("bottom", "인증에 실패하였습니다.", "error");
-} else if (notFoundAccessTokenError == "sns_login_failed") {
-  msgAlert("bottom", "SNS 로그인에 실패하였습니다.", "error");
-} else if (notFoundAccessTokenError == "need_login") {
-  msgAlert("bottom", "로그인이 필요합니다.", "error");
-} else if (notFoundAccessTokenError == "server_error") {
-  msgAlert("bottom", "서버 에러", "error");
-} else if (notFoundAccessTokenError == "expired") {
-  msgAlert("bottom", "인증이 만료되었습니다.", "error");
+  if (notFoundAccessTokenError == "not_found_access_token") {
+    msgAlert("bottom", "인증에 실패하였습니다.", "error");
+  } else if (notFoundAccessTokenError == "sns_login_failed") {
+    msgAlert("bottom", "SNS 로그인에 실패하였습니다.", "error");
+  } else if (notFoundAccessTokenError == "need_login") {
+    msgAlert("bottom", "로그인이 필요합니다.", "error");
+  } else if (notFoundAccessTokenError == "server_error") {
+    msgAlert("bottom", "서버 에러", "error");
+  } else if (notFoundAccessTokenError == "expired") {
+    msgAlert("bottom", "인증이 만료되었습니다.", "error");
+  }
+  const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+  window.history.replaceState({}, document.title, cleanUrl);
 }
 
 const loginFetch = async () => {
@@ -55,6 +59,8 @@ const loginFetch = async () => {
     bottomMsgAlert("서버 통신 오류", "error");
   }
 }
+
+checkError();
 
 joinButton.addEventListener("click", () => window.location.href = "/join");
 loginButton.addEventListener("click", loginFetch);

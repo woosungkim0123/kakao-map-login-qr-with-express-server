@@ -35,3 +35,12 @@
 .qr-container { width: 100%; padding-top: 30px;  }
 .wait-text { text-align: center;  font-weight: bold;  font-size:20px; }
 .canvas-wrap { padding-top: 50px; display: flex; justify-content: center; align-items: center; }
+
+/* users */
+.users-container { display: flex; align-items: center; justify-content: center; flex-direction: column; height: 100%; }
+.users-container button { width: 300px; height: 50px; font-weight: bold; font-size: 18px;  cursor: pointer; padding: 10px 20px; border: none; border-radius: 5px; background-color: #007BFF; color: #ffffff; transition: background-color 0.2s; }
+.users-container button:hover { background-color: #0056b3; }
+.users-container .user-info { width: 300px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; font-weight: bold; }
+.users-container .user-info img { width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; }
+.users-container .logout-btn { background-color: #FF0000; margin-bottom: 50px; }
+.users-container .logout-btn:hover { background-color: #cc0000; }

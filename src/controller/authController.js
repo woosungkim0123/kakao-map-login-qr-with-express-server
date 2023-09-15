@@ -32,7 +32,8 @@ export const loginUser = async (req, res) => {
 
 
 export const authMe = async (req, res) => {
-  return res.status(200).json(new ResponseBody(200, "success", "인증 성공", ""));
+  const user = req.user;
+  return res.status(200).json(new ResponseBody(200, "success", "인증 성공", { name: user.user_name, user_image : user.user_image, user_provider : user.user_provider }));
 }
 
 

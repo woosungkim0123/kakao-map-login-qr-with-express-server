@@ -4,8 +4,6 @@ import Exception from "../handler/Exception";
 import ResponseBody from "../handler/ResponseBody";
 import { getCourseListWitUser, updateCourseVisitedStatus } from "../service/courseService";
 
-
-
 export const qrCheck = async (req, res) => {
   const user = req.user;
   const qrDto = req.body;
