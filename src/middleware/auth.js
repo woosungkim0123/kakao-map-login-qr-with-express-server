@@ -1,11 +1,11 @@
 
 import jwt from "jsonwebtoken";
-import Exception from "../handler/exception.js";
+import exception from "../handler/exception.js";
 import UserRepository from "../repository/userRepository.js";
 
 export const isAuth = async (req, res, next) => {
   const authHeader = req.get('Authorization');
-  if (!(authHeader && authHeader.startsWith('Bearer '))) return res.status(Exception.AUTH_ERROR.statusCode).json(Exception.AUTH_ERROR);
+  if (!(authHeader && authHeader.startsWith('Bearer '))) return res.status(exception.AUTH_ERROR.statusCode).json(exception.AUTH_ERROR);
 
   const token = authHeader.split(' ')[1];
   jwt.verify(
@@ -15,14 +15,14 @@ export const isAuth = async (req, res, next) => {
       if (error) {
         // 토큰이 만료된 경우의 처리
         if (error instanceof jwt.TokenExpiredError) {
-          return res.status(Exception.AUTH_EXPIRED.statusCode).json(Exception.AUTH_EXPIRED);
+          return res.status(exception.AUTH_EXPIRED.statusCode).json(exception.AUTH_EXPIRED);
         } else {
           // 다른 JWT 관련 오류의 처리
-          return res.status(Exception.AUTH_ERROR.statusCode).json(Exception.AUTH_ERROR);
+          return res.status(exception.AUTH_ERROR.statusCode).json(exception.AUTH_ERROR);
         }
       }
       const user = await UserRepository.findByNo(decoded.no);
-      if (!user) return res.status(Exception.AUTH_ERROR.statusCode).json(Exception.AUTH_ERROR);
+      if (!user) return res.status(exception.AUTH_ERROR.statusCode).json(exception.AUTH_ERROR);
       req.user = user;
       next();
     }

@@ -1,4 +1,4 @@
-import Exception from "../handler/exception.js";
+import exception from "../handler/exception.js";
 import { CourseRepository } from "../repository/courseRepository.js";
 
 export const getCourseListWitUser = async (user) => {
@@ -8,13 +8,13 @@ export const getCourseListWitUser = async (user) => {
 
 export const updateCourseVisitedStatus = async ({ user, qrCode, latitude, longitude }) => {
   const course = await CourseRepository.findCourseByQrCode(qrCode);
-  if (!course) throw Exception.QR_BAD_REQUEST;
+  if (!course) throw exception.QR_BAD_REQUEST;
 
   const isVisited = await CourseRepository.findUsersCourse(user.user_no, course.course_no);
-  if (isVisited) throw Exception.ALREADY_VISTED;
+  if (isVisited) throw exception.ALREADY_VISTED;
 
   const dist = calculateDistance(latitude, longitude, course.course_latitude, course.course_longitude);
-  if (dist > 100) throw Exception.OUT_OF_RANGE;
+  if (dist > 100) throw exception.OUT_OF_RANGE;
   
   await CourseRepository.updateCourseVisited(user.user_no, course.course_no);
 }

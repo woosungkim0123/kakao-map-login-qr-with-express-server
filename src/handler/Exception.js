@@ -1,4 +1,4 @@
-export default class Exception {
+export default class exception {
   static QR_EMPTY = { statusCode: 400, statusText: "error", message: "QR코드가 없습니다.",  data: "" };
   static QR_BAD_REQUEST = { statusCode: 400, statusText: "error", message: "잘못된 QR정보 입니다.",  data: "" };
   static LOCATION_EMPTY = { statusCode: 400, statusText: "error", message: "위치 정보 없음",  data: "" };
