@@ -1,7 +1,7 @@
 "use strict";
 
-import Exception from "../handler/Exception.js";
-import ResponseBody from "../handler/ResponseBody.js";
+import Exception from "../handler/exception.js";
+import ResponseBody from "../handler/responseBody.js";
 import { getCourseListWitUser, updateCourseVisitedStatus } from "../service/courseService.js";
 
 export const qrCheck = async (req, res) => {

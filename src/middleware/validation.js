@@ -1,4 +1,4 @@
-import Exception from "../handler/Exception.js";
+import Exception from "../handler/exception.js";
 
 export const qrForm = (req, res, next) => {
   const { qrCode, latitude, longitude } = req.body;

@@ -1,8 +1,8 @@
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import UserRepository from "../repository/UserRepository.js";
-import Exception from "../handler/Exception.js";
+import UserRepository from "../repository/userRepository.js";
+import Exception from "../handler/exception.js";
 
 export const userJoinService = async ({ userId, userPassword, userName }) => {
   const user = await UserRepository.findById(userId);

@@ -1,5 +1,5 @@
-import Exception from "../handler/Exception.js";
-import { CourseRepository } from "../repository/CourseRepository.js";
+import Exception from "../handler/exception.js";
+import { CourseRepository } from "../repository/courseRepository.js";
 
 export const getCourseListWitUser = async (user) => {
   return await CourseRepository.findCourseListWithUser(user.user_no);

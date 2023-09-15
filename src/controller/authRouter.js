@@ -5,7 +5,7 @@ import { Strategy as KakaoStrategy } from 'passport-kakao';
 import { handleKakaoLogin, isAuth } from "../middleware/auth.js";
 import { authMe, joinUser, loginUser } from "./authController.js";
 
-const clientId = "93f665a6d2d2ade969e3bf2e9d4288a2"
+const clientId = process.env.CLIENT_ID;
 const callback = "/api/auth/kakao/callback"
 
 const authRouter = express.Router();
