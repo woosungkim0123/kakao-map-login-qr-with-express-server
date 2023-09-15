@@ -1,6 +1,6 @@
 import db from "../config/db";
 
-export class CourseRepository {
+export default class CourseRepository {
   static async findCourseListWithUser(user_no) {
     const QUERY = `SELECT c.*, uc.user_courses_id 
       FROM course c LEFT JOIN users_course uc ON c.course_no = uc.course_no AND uc.user_no=?`;
