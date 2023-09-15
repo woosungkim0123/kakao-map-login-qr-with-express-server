@@ -2,8 +2,8 @@ import express from "express";
 import passport from "passport";
 import jwt from "jsonwebtoken";
 import { Strategy as KakaoStrategy } from 'passport-kakao';
-import { handleKakaoLogin, isAuth } from "../middleware/auth";
-import { authMe, joinUser, loginUser } from "./authController";
+import { handleKakaoLogin, isAuth } from "../middleware/auth.js";
+import { authMe, joinUser, loginUser } from "./authController.js";
 
 const clientId = "93f665a6d2d2ade969e3bf2e9d4288a2"
 const callback = "/api/auth/kakao/callback"

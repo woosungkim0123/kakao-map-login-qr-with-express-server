@@ -1,8 +1,8 @@
 "use strict";
 import express from "express";
-import { getCourseList, qrCheck } from "./courseController";
-import { isAuth } from "../middleware/auth";
-import { qrForm } from "../middleware/validation";
+import { getCourseList, qrCheck } from "./courseController.js";
+import { isAuth } from "../middleware/auth.js";
+import { qrForm } from "../middleware/validation.js";
 
 const courseRouter = express.Router();
 

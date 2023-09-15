@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
-import courseRouter from "./controller/courseRouter";
-import webRootViewRouter from "./controller/web/webRootViewRouter";
-import authRouter from "./controller/authRouter";
+import courseRouter from "./controller/courseRouter.js";
+import webRootViewRouter from "./controller/web/webRootViewRouter.js";
+import authRouter from "./controller/authRouter.js";
 
 const app = express();
 

@@ -1,7 +1,7 @@
 
 import jwt from "jsonwebtoken";
-import Exception from "../handler/Exception";
-import UserRepository from "../repository/UserRepository";
+import Exception from "../handler/Exception.js";
+import UserRepository from "../repository/UserRepository.js";
 
 export const isAuth = async (req, res, next) => {
   const authHeader = req.get('Authorization');
