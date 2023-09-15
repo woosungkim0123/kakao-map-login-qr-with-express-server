@@ -1,26 +1,50 @@
+## 설치
+
+```
+npm install
+```
+
 ## 실행
 
-터미널에서 package.json이 있는 위치에서 해당 명령어를 실행하면 됩니다.
+package.json이 있는 위치에서 해당 명령어를 실행하면 됩니다.
 
 ### 개발
-
+nodemon을 활용한 실행 명령어
 ```json
-// 개발 과정에서 nodemon을 활용한 실행 명령어
 npm run dev
 ```
 
 ### 배포
 
-```json
-// 빌드
+빌드 
+```
 npm run build
-
-// 시작
+```
+시작
+```
 npm run start
 ```
 
+## 프로젝트 설명
 
-## 설정
+### 개요
+
+카카오 지도 API를 활용하여 대구 용계역 주변의 코스를 보여주고 해당 위치의 QR코드를 찍어 인증하는 프로젝트
+
+### 기능
+
+1. 회원가입 기능 및 로그인 기능 (카카오 로그인 포함), JWT를 활용한 인증
+2. 카카오 지도 API를 활용한 코스 소개
+3. QR 인식을 통한 회원 방문 인증
+
+### 버전
+
+```
+node 16.17.1
+npm 8.15.0
+```
+
+## 추가 설명
 
 ### Babel
 
@@ -48,8 +72,8 @@ nodemon.json은 nodemon의 설정 파일이고 exec 속성은 nodemon이 파일 
 }
 ```
 
+## 기타
 
-// 추천 사이트 : https://codepen.io/
-// 유튜브 : https://www.youtube.com/watch?v=cpEeqACsF_Q
-// https://codepen.io/dissimulate/pen/nYQrNP
+- https://www.youtube.com/watch?v=cpEeqACsF_Q
+- https://codepen.io/dissimulate/pen/nYQrNP
 
