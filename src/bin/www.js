@@ -1,4 +1,3 @@
-"use strict";
 import "dotenv/config";
 import "regenerator-runtime";
 import app from "../app.js";

@@ -1,5 +1,3 @@
-"use strict";
-
 import exception from "../handler/exception.js";
 import responseBody from "../handler/responseBody.js";
 import { userJoinService, userLoginService } from "../service/userService.js";

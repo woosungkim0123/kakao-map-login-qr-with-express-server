@@ -1,4 +1,3 @@
-"use strict";
 import express from "express";
 import { getCourseList, qrCheck } from "./courseController.js";
 import { isAuth } from "../middleware/auth.js";
