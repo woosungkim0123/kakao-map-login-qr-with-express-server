@@ -41,8 +41,8 @@ const checkUserInfo = async () => {
         Authorization: `Bearer ${accessToken}`,
       }
     }); 
+    const result = await response.json();
     if(response.status === 200 ) {
-      const result = await response.json();
       loginHtml(result.data);
     } else {
       localStorage.removeItem("accessToken");

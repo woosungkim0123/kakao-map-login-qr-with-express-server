@@ -25,8 +25,7 @@ const joinFetch = async () => {
             userName
         }),
     });
-    // TODO 삭제하자
-    const result = await response.json();
+    
     if(response.status == 201) {
       msgAlert("center", "회원가입 성공", "success");
       setTimeout(() => {
