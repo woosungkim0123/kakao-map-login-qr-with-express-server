@@ -88,6 +88,10 @@ function startScan() {
       video.setAttribute("playsinline", true);
       video.play();
       requestAnimationFrame(tick);
+    })
+    .catch(function (err) {
+      console.error("Error accessing the camera", err);
+      msgAlert("bottom", "카메라 접근에 실패했습니다.", "error");
     });
 
   // 각 프레임에서 호출되어 QR 코드를 스캔하는 함수
