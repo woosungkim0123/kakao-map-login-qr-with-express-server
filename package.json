@@ -1,7 +1,6 @@
 {
-  "name": "tour",
-  "version": "1.0.0",
-  "description": "용계역 여행",
+  "name": "yonggye-travel",
+  "version": "3.0.0",
   "scripts": {
     "start": "node build/bin/www.js",
     "build": "babel src -d build",

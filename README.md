@@ -1,79 +1,129 @@
-## 설치
+# Yonggye Travel
 
-```
-npm install
-```
+## Description
 
-## 실행
+Yonggye Travel is a service designed for travelers to explore and authenticate their journey around Yonggye Station in Daegu. 
 
-package.json이 있는 위치에서 해당 명령어를 실행하면 됩니다.
+Uniquely facilitated through a WebView in a mobile app, it offers a convenient way to experience the local area by following various courses and validating visits.
 
-### 개발
-nodemon을 활용한 실행 명령어
-```
-npm run dev
-```
+## Features
 
-### 배포
+1. **QR Code Recognition for Visit Verification**: Users can authenticate their visits by scanning QR codes at each destination.
+   
+2. **Course Introduction Using Kakao Maps API**: Utilizing the Kakao Maps API, the service guides users through various courses, offering detailed and interactive maps for a seamless travel experience.
+   
+3. **Real-Time User Location Display**: The app includes a feature that displays the user's current location in real-time, enhancing the navigational experience and making it easier to follow the designated travel courses.
+   
+4. **Registration and Kakao Login**: Supports both standard registration and Kakao login, providing users with a wide range of authentication options.
 
-빌드 
-```
-npm run build
-```
-시작
-```
-npm run start
-```
+## Technology Stack
 
-## 프로젝트 설명
+- Ejs
+- CSS
+- JavaScript
+- Express
+- MySQL
 
-### 개요
+## Installation and Running
 
-카카오 지도 API를 활용하여 대구 용계역 주변의 코스를 보여주고 해당 위치의 QR코드를 찍어 인증하는 프로젝트
+### System Requirements
 
-### 기능
-
-1. 회원가입 기능 및 로그인 기능 (카카오 로그인 포함), JWT를 활용한 인증
-2. 카카오 지도 API를 활용한 코스 소개
-3. QR 인식을 통한 회원 방문 인증
-
-### 버전
+Before installing and running the project, make sure the following software is installed on your system:
 
 ```
 node 16.17.1
 npm 8.15.0
 ```
 
-## 추가 설명
+### Installation
 
-### Babel
-
-Babel은 JavaScript 컴파일러.
-
-최신 JavaScript 문법을 이전 버전의 JavaScript 문법으로 변환함으로써 최신 문법을 사용한 코드도 구버전의 브라우저에서 실행할 수 있게 해줍니다.
-
-babel.config.json는 Babel의 설정 파일이고 presets은 어떤 변환을 수행해야 하는지 지정하는 배열입니다.
-
-```json
-{
-  "presets": ["@babel/preset-env"]
-}
+```
+npm install
 ```
 
-### nodemon
+### Configuration
 
-nodemon은 파일 변경을 감지하고 자동으로 Node.js 애플리케이션을 재시작하는 도구입니다.
+1. Create a `.env` file at the root of the project.
+2. Add the following content to the `.env` file:
+   
+    ```sh
+    DB_HOST= # set DB Hostname
+    DB_PORT= # set DB Port
+    DB_USER= # set DB User Id
+    DB_DATABASE= # set DB name
+    DB_PASSWORD= # set DB Password
+    CLIENT_ID= # Kakao login client id
+    SECRET_KEY= # JWT secret key
+    JWT_EXPIRE= # JWT expiration date, e.g., 14d = 14 days
+    ```
 
-nodemon.json은 nodemon의 설정 파일이고 exec 속성은 nodemon이 파일 변경을 감지했을 때 실행할 명령어를 지정한 것입니다.
+3. Register Kakao Maps API key in src/client/html/course.ejs
 
-```json
-{
-  "exec": "babel-node src/bin/www.js"
-}
+    ```html
+    <!-- Register the API key in appkey -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey="></script>
+    ```
+
+### Running
+
+```sh
+npm run dev
 ```
 
-## 기타
+### Deploy
 
-- https://www.youtube.com/watch?v=cpEeqACsF_Q
-- https://codepen.io/dissimulate/pen/nYQrNP
+```sh
+# build
+npm run build
 
+# start server
+npm run start
+```
+
+## Release Notes
+
+### Version 1.0.0 (2022. 6. 2)
+
+- Implemented a map of the area around Yonggye Station using the Kakao Maps API.
+- Real-time user location display feature.
+- QR code-based authentication feature.
+- Included basic functionalities.
+
+### Version 1.0.1 (2022. 6. 2)
+
+- Added a loading animation for map loading.
+
+### Version 1.1.0 (2022. 6. 2)
+
+- Modularization of duplicate EJS code.
+
+### Version 2.0.0 (2023. 2. 8)
+
+- Transitioned to REST API.
+- Added features for registration, login, and logout.
+- Added exception handling logic.
+- Added validation for request data.
+- Implemented a choice between using a database and server memory for storage.
+- Transitioned from function-based to class-based code structure.
+- Switched to using the Android QR library when accessed via the Android app.
+
+### Version 2.0.1 (2023. 2. 8)
+
+- Resolved deployment errors due to case sensitivity issues in Git.
+
+### Version 2.0.2 (2023. 2. 12)
+
+- Resolved CORS error issues.
+
+### Version 3.0.0 (2023. 9. 15)
+
+- Added Kakao login functionality using Passport.
+- Added QR authentication verification logic (using Pythagorean theorem).
+- Removed the server memory usage option.
+- Changed the structure to allow for common responses.
+- Added README and table.sql files.
+- Removed the use of the Android QR library and reverted to the original library.
+
+### Version 3.0.1 (2023. 9. 19)
+
+- Added exception handling for camera recognition failures.

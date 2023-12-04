@@ -1,3 +1,4 @@
+// 실행방법 node docs/dis_explain.js
 
 const calculateDistance = (currentLat, currentLon, targetLat, targetLon) => {
   currentLat = parseFloat(currentLat); currentLon = parseFloat(currentLon); targetLat = parseFloat(targetLat); targetLon = parseFloat(targetLon);
@@ -16,7 +17,6 @@ const distCheck = (dist) => {
     console.log('두 지점의 거리는 50m를 초과합니다.');
   }
 }
-
 
 const 시지_광장_위도 = 35.839270509515444;
 const 시지_광장_경도 = 128.70664350303022;
