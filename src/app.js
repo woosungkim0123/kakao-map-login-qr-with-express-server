@@ -1,58 +1,36 @@
-import express from "express";
-import cors from "cors";
-import courseRouter from "./controller/courseRouter.js";
-import webRootViewRouter from "./controller/web/webRootViewRouter.js";
-import authRouter from "./controller/authRouter.js";
+// .env 파일에서 환경 변수를 로드하여 process.env에 추가
+require('dotenv').config();
 
+// 각 경로에 대한 핸들러 함수 가져오기
+const join = require('./handler/join');
+const login = require('./handler/login');
+const courseList = require('./handler/course_list');
+const auth = require('./middleware/auth');
+const visitCourse = require('./handler/visit_course');
+
+// Express 프레임워크 가져오기
+const express = require('express');
+
+// 서버가 실행될 포트 정의, 환경 변수에서 PORT가 설정되지 않은 경우 기본값은 8080
+const PORT = process.env.PORT || 8080
+
+// Express 애플리케이션 인스턴스 생성
 const app = express();
 
-/**
- * 템플릿 뷰 엔진을 ejs로 설정합니다
- * ejs는 HTML을 동적으로 생성하기 위해 사용하는 템플릿 엔진입니다.
- */
-app.set("view engine", "ejs");
-/**
- * view의 위치를 설정합니다.
- */
-app.set("views", process.cwd() + "/src/client/html");
-
-/**
- * CORS (Cross-Origin Resource Sharing)는 웹 페이지의 요청 도메인과 응답 도메인이 다를 때
- * 안전하게 요청을 처리할 수 있도록 하는 웹 브라우저의 보안 기술입니다.
- * 프론트 서버를 따로 사용시 (예: React, Vue 등) ALLOWED_ORIGINS 배열에 추가해야 합니다.
- */
-const ALLOWED_ORIGINS = [
-  "https://master--candid-halva-4d19f5.netlify.app", 
-  "http://localhost:3000"
-];
-app.use(cors({
-  origin: ALLOWED_ORIGINS,
-  method: "GET, POST, PUT, DELETE, PATCH",
-  credentials: true,
-}));
-
-/**
- * express.json() 미들웨어를 사용하여 들어오는 요청의 JSON 본문을 파싱합니다.
- * 이를 통해 req.body로 JSON 데이터에 접근할 수 있습니다.
- */
+// 들어오는 요청의 JSON 데이터를 파싱할 수 있도록 설정
 app.use(express.json());
 
-/**
- * express.urlencoded() 미들웨어는 URL-encoded 데이터를 파싱합니다.
- * 이 미들웨어는 폼 데이터(form data)를 처리할 때 주로 사용됩니다.
- */
-app.use(express.urlencoded({ extended: true }));
+// API 경로 정의
+// 사용자 회원가입 경로
+app.post("/api/v1/auth/join", join);
+// 사용자 로그인 경로
+app.post("/api/v1/auth/login", login);
+// 코스 목록 조회 경로 (인증 미들웨어를 통해 보호됨)
+app.get("/api/v1/courses", auth, courseList);
+// 코스 방문 처리 경로 (인증 미들웨어를 통해 보호됨)
+app.post("/api/v1/courses/visit", auth, visitCourse);
 
-app.use("/css", express.static("src/client/css"));
-app.use("/js", express.static("src/client/js"));
-app.use("/file", express.static("src/client/file"));
-
-// api
-app.use("/api/auth", authRouter);
-app.use("/api/course", courseRouter);
-
-// web
-app.use("/", webRootViewRouter)
-
-
-export default app;
+// 서버를 시작하고 지정된 포트에서 요청을 대기
+app.listen(PORT, () => {
+    console.info(`Server is running on port ${PORT}`);
+});
